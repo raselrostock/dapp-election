@@ -14,6 +14,7 @@ contract Election{
 	uint public candidateCount;
 	//Constractor 
 	function Election() public{
+		// Add Candidate 1
 		addCandidate( "Candidate 1" );
 		addCandidate( "Candidate 2" );
 	}
