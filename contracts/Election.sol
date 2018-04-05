@@ -16,6 +16,7 @@ contract Election{
 	function Election() public{
 		// Add Candidate 1
 		addCandidate( "Candidate 1" );
+		//Add Candidate 2
 		addCandidate( "Candidate 2" );
 	}
 	// Add the candidates
