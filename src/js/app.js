@@ -21,19 +21,19 @@ App= {
    },
 
    initContract: function(){
-      $.getJSON( 'Election' , function(election){
+      $.getJSON('Election' , function(election){
         //Instantiate a Truffle Contract from artifacts
           App.contracts.Election = TruffleContract(election);
         // Set the current provider 
           App.contracts.Election.setProvider( App.web3Provider );
           return App.rander();
       });
-   }
+   },
 
    rander: function(){
       var electionInstance;
       var loader = $('#loader' );
-      var content = $('#content' );
+      var content = $('#content');
       loader.show();
       content.hide();
       // Set the accounts
@@ -47,18 +47,21 @@ App= {
       candidatesResults.empty();
       App.contracts.Election.deployed().then(function(instance){
           electionInstance = instance;
-          candidateCount=electionInstance.candidateCount();
-          for( var i=1; i <= candidateCount; i++){
-              electionInstance.candidates(i).then(function(candidate){
-                  var contentTemplate = "<tr><th>"+candidate[0]+"</th><td>"+candidate[1]+"</td><th>"+candidate[2]+"</td></tr>"
-                  candidatesResults.append(contentTemplate);
-              });
-          }
+          return electionInstance.candidateCount();
+        }).then(function(candidateCount){
+              for( var i=1; i <= candidateCount; i++){
+                  electionInstance.candidates(i).then(function(candidate){
+                      var contentTemplate = "<tr><th>"+candidate[0]+"</th><td>"+candidate[1]+"</td><th>"+candidate[2]+"</td></tr>"
+                      candidatesResults.append(contentTemplate);
+                  });
+              }
+           loader.hide();
+           content.show();
+
       }).catch(function(error){
           console.warn(error);
       });
-      loader.hide();
-      content.show();
+      
    }
 };
 
