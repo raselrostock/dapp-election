@@ -38,6 +38,9 @@ contract('Election',function(accounts){
 			candidateId =1;
 			return electioninstance.Vote( candidateId, {from:accounts[0]});
 		}).then(function(receipt){
+			assert.equal(receipt.logs.length,1,'An event is triggred');
+			assert.equal(receipt.logs[0].event,'voteEvent',"The event type was correct");
+			assert.equal(receipt.logs[0].args._candidateId.toNumber(),candidateId,'Candidate is right');
 			return electioninstance.voters(accounts[0]);
 		}).then(function(voted){
 			assert(voted,"The voter marked as voted");

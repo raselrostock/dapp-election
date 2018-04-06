@@ -3,7 +3,7 @@ App= {
    web3Provider: null,
    contracts: {},
    account: '0x0',
-
+   hasVoted: false,
    init: function(){
       return App.initWeb3();
    },
@@ -26,11 +26,24 @@ App= {
           App.contracts.Election = TruffleContract(election);
         // Set the current provider 
           App.contracts.Election.setProvider( App.web3Provider );
-          return App.rander();
+          App.listenEvent();
+          return App.render();
       });
    },
 
-   rander: function(){
+   listenEvent: function(){
+      App.contracts.Election.deployed().then(function(instance){
+          instance.voteEvent({},{
+              fromBlock: 0,
+              toBlock: 'latest'
+            }).watch(function(error,event){
+                  console.log("Event triggered",event);
+                App.render();
+            });
+        });
+   },
+
+   render: function(){
       var electionInstance;
       var loader = $('#loader' );
       var content = $('#content');
