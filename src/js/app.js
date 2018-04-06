@@ -63,14 +63,10 @@ App= {
             return electionInstance.voters(App.account);
       }).then(function(hasVoted){
           if(hasVoted){
-            $('form').hide;
-            loader.hide();
-            content.show();
-          }else{
-            loader.hide();
-            content.show();
-            $('form').show;
+            $('form').hide();
           }
+            loader.hide();
+            content.show();
       }).catch(function(error){
           console.warn(error);
       });
