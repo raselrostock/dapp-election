@@ -75,13 +75,12 @@ App= {
    castVote: function(){
       var candidateId=$('#candidatesSelect').val();
       App.contracts.Election.deployed().then(function(instance){
-          electionInstance=instance;
-          return electionInstance.Vote(candidateId, {from:App.account});
+          return instance.Vote(candidateId, {from:App.account});
       }).then(function(result){
-          loader.show();
-          content.hide();
+          $('#loader' ).show();
+          $('#content' ).hide();
       }).catch(function(err){
-          console.warn(err);
+          console.error(err);
       });
    }
 };
