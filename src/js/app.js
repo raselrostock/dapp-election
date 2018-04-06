@@ -4,6 +4,7 @@ App= {
    contracts: {},
    account: '0x0',
    hasVoted: false,
+
    init: function(){
       return App.initWeb3();
    },
@@ -30,15 +31,15 @@ App= {
           return App.render();
       });
    },
-
    listenEvent: function(){
       App.contracts.Election.deployed().then(function(instance){
-          instance.voteEvent({},{
+          instance.voteEvent({}, {
               fromBlock: 0,
               toBlock: 'latest'
-            }).watch(function(error,event){
-                  console.log("Event triggered",event);
-                App.render();
+            }).watch(function(error, event) {
+              console.log("event triggered", event)
+              // Reload when a new vote is recorded
+              App.render();
             });
         });
    },
