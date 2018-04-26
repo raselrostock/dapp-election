@@ -7,12 +7,7 @@ contract Election{
 		string name;
 		uint voteCount;
 	}
-	//Create Event for notify the vote
-	// input a indexed local id
-	event voteEvent(
-		uint indexed _candidateId
-		);
-
+	
 	// Mapping the Candidate
 	// @input uint
 	// @return Candidate Model
@@ -30,6 +25,12 @@ contract Election{
 	// default value is 0
 	uint public candidateCount;
 	//Constractor 
+
+	//Create Event for notify the vote
+	// input a indexed local id
+	event voteEvent(
+		uint indexed _candidateId
+		);
 
 	function Election() public{
 		// Add Candidate 1
@@ -60,8 +61,6 @@ contract Election{
 
 		//Increase the Candidate vote
 		candidates[_candidateId].voteCount++;
-
-		// Notify the voted
-		voteEvent(_candidateId);
+		emit voteEvent(_candidateId);
 	}
 }
